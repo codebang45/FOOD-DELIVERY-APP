@@ -1,9 +1,12 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 export const CartContext = createContext();
 
 function CartProvider({ children }) {
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState(() => {
+  const savedCart = localStorage.getItem("cartItems");
+  return savedCart ? JSON.parse(savedCart) : [];
+});
 
  const addToCart = (item) => {
   const existingItem = cartItems.find(
@@ -30,9 +33,45 @@ function CartProvider({ children }) {
   setCartItems(cartItems.filter((_, i) => i !== index));
 };
 
+const increaseQuantity = (id) => {
+  setCartItems(
+    cartItems.map((item) =>
+      item.id === id
+        ? { ...item, quantity: item.quantity + 1 }
+        : item
+    )
+  );
+};
+
+const decreaseQuantity = (id) => {
+  setCartItems(
+    cartItems
+      .map((item) =>
+        item.id === id
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
+      )
+      .filter((item) => item.quantity > 0)
+  );
+};
+
+useEffect(() => {
+  localStorage.setItem(
+    "cartItems",
+    JSON.stringify(cartItems)
+  );
+}, [cartItems]);
+
+
   return (
    <CartContext.Provider
-  value={{ cartItems, addToCart, removeFromCart }}
+  value={{
+  cartItems,
+  addToCart,
+  removeFromCart,
+  increaseQuantity,
+  decreaseQuantity,
+}}
 >
       {children}
     </CartContext.Provider>

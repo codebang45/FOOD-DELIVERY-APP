@@ -2,7 +2,12 @@ import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 
 function Cart() {
-  const { cartItems, removeFromCart } = useContext(CartContext);
+  const {
+  cartItems,
+  removeFromCart,
+  increaseQuantity,
+  decreaseQuantity,
+} = useContext(CartContext);
 const totalPrice = cartItems.reduce(
   (total, item) => total + item.price * item.quantity,
   0
@@ -37,6 +42,26 @@ const totalPrice = cartItems.reduce(
                 <p className="text-gray-500">
                 Quantity: {item.quantity}
                 </p>
+
+                <div className="flex items-center gap-3 mt-2">
+                <button
+                 onClick={() => decreaseQuantity(item.id)}
+                 className="bg-red-500 text-white px-3 py-1 rounded"
+  >
+    -
+  </button>
+
+  <span className="font-bold">
+    {item.quantity}
+  </span>
+
+  <button
+    onClick={() => increaseQuantity(item.id)}
+    className="bg-green-500 text-white px-3 py-1 rounded"
+  >
+    +
+  </button>
+</div>
               </div>
 
 
@@ -44,9 +69,7 @@ const totalPrice = cartItems.reduce(
                 {item.emoji}
               </div>
 
-            <button>-</button>
-<span>{item.quantity}</span>
-<button>+</button>
+
 
             </div>
           ))}
