@@ -55,6 +55,10 @@ const decreaseQuantity = (id) => {
   );
 };
 
+const clearCart = () => {
+  setCartItems([]);
+};
+
 useEffect(() => {
   localStorage.setItem(
     "cartItems",
@@ -65,12 +69,13 @@ useEffect(() => {
 
   return (
    <CartContext.Provider
-  value={{
+value={{
   cartItems,
   addToCart,
   removeFromCart,
   increaseQuantity,
   decreaseQuantity,
+  clearCart,
 }}
 >
       {children}

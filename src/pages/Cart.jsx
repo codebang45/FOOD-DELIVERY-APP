@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
+import { Link } from "react-router-dom";
 
 function Cart() {
   const {
@@ -7,6 +8,7 @@ function Cart() {
   removeFromCart,
   increaseQuantity,
   decreaseQuantity,
+  clearCart,
 } = useContext(CartContext);
 const totalPrice = cartItems.reduce(
   (total, item) => total + item.price * item.quantity,
@@ -43,7 +45,7 @@ const totalPrice = cartItems.reduce(
                 Quantity: {item.quantity}
                 </p>
 
-                <div className="flex items-center gap-3 mt-2">
+                <div className="flex items-center gap-6 mt-2">
                 <button
                  onClick={() => decreaseQuantity(item.id)}
                  className="bg-red-500 text-white px-3 py-1 rounded"
@@ -73,10 +75,25 @@ const totalPrice = cartItems.reduce(
 
             </div>
           ))}
-          <div className="mt-8 text-right">
+      <div className="mt-8 text-right">
   <h2 className="text-3xl font-bold">
     Total: ₹{totalPrice}
   </h2>
+
+  <div className="mt-4 flex justify-end gap-4">
+    <Link to="/checkout">
+      <button className="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600">
+        Proceed To Checkout
+      </button>
+    </Link>
+
+    <button
+      onClick={clearCart}
+      className="bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600"
+    >
+      Clear Cart
+    </button>
+  </div>
 </div>
         </div>
       )}

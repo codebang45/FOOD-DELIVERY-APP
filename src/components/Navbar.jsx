@@ -26,6 +26,10 @@ function Navbar() {
 
   <li>About</li>
 
+<li>
+  <Link to="/orders">Orders</Link>
+</li>
+
   <li>Contact</li>
 </ul>
       <div className="flex items-center gap-4">
