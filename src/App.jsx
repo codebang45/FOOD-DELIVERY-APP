@@ -2,12 +2,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Checkout from "./pages/Checkout";
 import OrderSuccess from "./pages/OrderSuccess";
 import Orders from "./pages/Orders";
-
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 import Home from "./pages/Home";
 import Menu from "./pages/Menu";
 import Cart from "./pages/Cart";
-import Login from "./pages/Login";
+
 
 function App() {
   return (
@@ -20,6 +21,8 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/success" element={<OrderSuccess />} />
         <Route path="/orders" element={<Orders />} />
+        <Route path="/signup" element={<Signup />} />
+        
       </Routes>
     </BrowserRouter>
   );

@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CartContext } from "../context/CartContext";
 
 function Checkout() {
     const navigate = useNavigate();
     const { cartItems } = useContext(CartContext);
+    const [phone, setPhone] = useState("");
+const [address, setAddress] = useState("");
   return (
     <div className="max-w-2xl mx-auto p-10">
       <h1 className="text-4xl font-bold mb-8">
@@ -24,12 +26,18 @@ onSubmit={(e) => {
     0
   );
 
-  const newOrder = {
-    id: Math.floor(Math.random() * 100000),
-    total,
-    date: new Date().toLocaleDateString(),
-    status: "Placed",
-  };
+const newOrder = {
+  id: Math.floor(Math.random() * 100000),
+  total,
+  items: cartItems.reduce(
+    (sum, item) => sum + item.quantity,
+    0
+  ),
+  phone,
+  address,
+  date: new Date().toLocaleDateString(),
+  status: "Placed",
+};
 
   localStorage.setItem(
     "orders",
@@ -40,17 +48,21 @@ onSubmit={(e) => {
 }}
 >
 
-        <input
-          type="text"
-          placeholder="Phone Number"
-          className="w-full border p-3 rounded-lg"
-        />
+<input
+  type="text"
+  placeholder="Phone Number"
+  value={phone}
+  onChange={(e) => setPhone(e.target.value)}
+  className="w-full border p-3 rounded-lg"
+/>
 
-        <textarea
-          placeholder="Delivery Address"
-          className="w-full border p-3 rounded-lg"
-          rows="4"
-        ></textarea>
+<textarea
+  placeholder="Delivery Address"
+  value={address}
+  onChange={(e) => setAddress(e.target.value)}
+  className="w-full border p-3 rounded-lg"
+  rows="4"
+></textarea>
 
         <button
           type="submit"

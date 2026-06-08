@@ -2,20 +2,36 @@ import { FaShoppingCart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
+import { AuthContext } from "../context/AuthContext";
 
 function Navbar() {
    const { cartItems } = useContext(CartContext);
+   const { user, logout } = useContext(AuthContext);
    const totalItems = cartItems.reduce(
   (sum, item) => sum + item.quantity,
   0
 );
   return (
-    <nav className="flex justify-between items-center px-8 py-4 backdrop-blur-md bg-white/80 sticky top-0 z-50 shadow-sm">
-        <h1 className="text-3xl font-extrabold">
-    Food<span className="text-orange-500">ie</span>
-        </h1>
+    
+    <nav className="
+absolute
+top-0
+left-0
+w-full
+z-50
+flex
+justify-between
+items-center
+px-12
+py-6
+bg-transparent
+text-white
+">
+ <h1 className="text-5xl font-bold text-white">
+  Foodie
+</h1>
 
-<ul className="flex gap-8 font-medium">
+<ul className="flex gap-10 font-semibold text-white">
   <li>
     <Link to="/">Home</Link>
   </li>
@@ -32,7 +48,7 @@ function Navbar() {
 
   <li>Contact</li>
 </ul>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-10">
 <Link to="/cart" className="relative">
   <FaShoppingCart
     size={22}
@@ -43,11 +59,26 @@ function Navbar() {
     {totalItems}
   </span>
 </Link>
-       <Link to="/login">
-  <button className="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600">
-    Login
-  </button>
-</Link>
+  {user ? (
+  <div className="flex items-center gap-3">
+    <span className="font-semibold">
+      Hi {user.name} 👋
+    </span>
+
+    <button
+      onClick={logout}
+      className="bg-red-500 text-white px-4 py-2 rounded-lg"
+    >
+      Logout
+    </button>
+  </div>
+) : (
+  <Link to="/login">
+   <button className="bg-black text-white px-6 py-3 rounded-2xl shadow-lg hover:scale-105 hover:bg-gray-900 transition-all duration-300">
+  Login
+</button>
+  </Link>
+)}
       </div>
     </nav>
   );

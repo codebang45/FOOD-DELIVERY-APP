@@ -9,6 +9,7 @@ const orders = JSON.parse(localStorage.getItem("orders")) || [];
 
       {orders.length === 0 ? (
   <p className="text-gray-500">
+
     No Orders Yet
   </p>
 ) : (
@@ -22,6 +23,10 @@ const orders = JSON.parse(localStorage.getItem("orders")) || [];
             <h2 className="text-xl font-semibold">
               Order #{order.id}
             </h2>
+
+          <p>Items: {order.items}</p>
+          <p>Phone: {order.phone}</p>
+          <p>Address: {order.address}</p>
 
             <p>Total: ₹{order.total}</p>
             <p>Date: {order.date}</p>

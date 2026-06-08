@@ -9,6 +9,7 @@ function CartProvider({ children }) {
 });
 
  const addToCart = (item) => {
+  console.log(item);
   const existingItem = cartItems.find(
     (cartItem) => cartItem.id === item.id
   );

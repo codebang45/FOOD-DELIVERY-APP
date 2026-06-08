@@ -10,8 +10,14 @@ function Cart() {
   decreaseQuantity,
   clearCart,
 } = useContext(CartContext);
+
+console.log(cartItems);
+
 const totalPrice = cartItems.reduce(
-  (total, item) => total + item.price * item.quantity,
+  (total, item) =>
+    total +
+    parseInt(item.price.replace("₹", "")) *
+      item.quantity,
   0
 );
 

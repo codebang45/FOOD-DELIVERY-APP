@@ -1,50 +1,202 @@
 import Navbar from "../components/Navbar";
 import Categories from "../components/Categories";
 import PopularDishes from "../components/PopularDishes";
+import heroBg from "../components/assets/images/hero-bg.png";
 
-// import heroBurger from "../assets/images/hero-burger.jpg";
+import foodDelivery from "../components/assets/cards/food-delivery.jpg";
+import instamart from "../components/assets/cards/instamart.jpg";
+import dineout from "../components/assets/cards/dineout.jpg";
+import healthhub from "../components/assets/cards/healthhub.jpg";
+import genie from "../components/assets/cards/genie.jpg";
 
+import Rewards from "../components/Rewards";
 
 function Home() {
   return (
     <>
       <Navbar />
 
-      <section className="min-h-[85vh] flex items-center justify-center px-10 bg-gradient-to-r from-orange-50 via-white to-orange-100">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-16">
+      {/* Hero Section */}
+<section
+  className="relative min-h-screen bg-cover bg-center"
+  style={{
+    backgroundImage: `url(${heroBg})`,
+  }}
+>
+  <div className="absolute inset-0 bg-black/10"></div>
 
-          <div className="flex-1">
-            <h1 className="text-6xl font-bold leading-tight">
-              Delicious Food
-              <span className="text-orange-500"> Delivered</span>
-              <br />
-              To Your Door
-            </h1>
+  <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6">
 
-            <p className="text-gray-600 mt-6 text-lg">
-              Order your favorite meals from the best restaurants
-              and get them delivered fast at your doorstep.
-            </p>
+   <h1 className="text-4xl md:text-5xl font-extrabold text-white text-center max-w-4xl leading-tight">
+  Discover Great Food
+  <br />
+  Delivered Fast To Your Door !
+  
+</h1>
 
-            <button className="mt-8 bg-orange-500 text-white px-8 py-4 rounded-xl hover:scale-105 hover:bg-orange-600 transition-all duration-300 shadow-lg">
-             Order Now
-            </button>
-          </div>
+<div className="flex justify-center gap-4 mt-10">
+  <input
+    type="text"
+    placeholder="Enter your delivery location"
+    className="
+      w-[340px]
+      h-[62px]
+      bg-white
+      rounded-2xl
+      px-6
+      text-[17px]
+      shadow-md
+      outline-none
+    "
+  />
 
-        <div className="flex-1 flex justify-center">
-  <img
-    src="/hero-burger.jpg"
-    alt="burger"
-    className="w-[500px] hover:scale-105 transition duration-500"
+  <input
+    type="text"
+    placeholder="Search for restaurant, item or more"
+    className="
+      w-[520px]
+      h-[62px]
+      bg-white
+      rounded-2xl
+      px-6
+      text-[17px]
+      shadow-md
+      outline-none
+    "
   />
 </div>
 
-        </div>
-      </section>
+    <div className="grid grid-cols-2 md:grid-cols-5 gap-6 mt-14 w-full max-w-6xl">
+
+      <div className="bg-white rounded-3xl p-5 shadow-xl hover:scale-105 transition">
+       <img
+  src={foodDelivery}
+  alt=""
+  className="h-44 mx-auto object-contain"
+/>
+        <h3 className="font-bold text-xl mt-3"> 
+          Food Delivery
+        </h3>
+        <p className="text-gray-500">
+          From Restaurants
+        </p>
+      </div>
+
+      <div className="bg-white rounded-3xl p-5 shadow-xl hover:scale-105 transition">
+        <img
+  src={instamart}
+  alt=""
+  className="h-44 mx-auto object-contain"
+/>
+        <h3 className="font-bold text-xl mt-3">
+          Instamart
+        </h3>
+        <p className="text-gray-500">
+          Instant Grocery
+        </p>
+      </div>
+
+      <div className="bg-white rounded-3xl p-5 shadow-xl hover:scale-105 transition">
+        <img
+  src={dineout}
+  alt=""
+  className="h-44 mx-auto object-contain"
+/>
+        <h3 className="font-bold text-xl mt-3">
+          Dineout
+        </h3>
+        <p className="text-gray-500">
+          Save More
+        </p>
+      </div>
+
+      <div className="bg-white rounded-3xl p-5 shadow-xl hover:scale-105 transition">
+        <img
+  src={healthhub}
+  alt=""
+  className="h-44 mx-auto object-contain"
+/>
+        <h3 className="font-bold text-xl mt-3">
+          Health Hub
+        </h3>
+        <p className="text-gray-500">
+          Medicines
+        </p>
+      </div>
+
+      <div className="bg-white rounded-3xl p-5 shadow-xl hover:scale-105 transition">
+        <img
+  src={genie}
+  alt=""
+  className="h-44 mx-auto object-contain"
+/>
+        <h3 className="font-bold text-xl mt-3">
+          Genie
+        </h3>
+        <p className="text-gray-500">
+          Pick & Drop
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+      {/* Stats Section */}
+<section className="py-20 bg-white">
+  <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 px-8">
+
+    <div className="bg-orange-50 p-10 rounded-3xl shadow-xl text-center">
+      <h2 className="text-5xl font-bold text-orange-500">
+        1000+
+      </h2>
+      <p className="mt-3 text-gray-600">
+        Happy Customers
+      </p>
+    </div>
+
+    <div className="bg-orange-50 p-10 rounded-3xl shadow-xl text-center">
+      <h2 className="text-5xl font-bold text-orange-500">
+        500+
+      </h2>
+      <p className="mt-3 text-gray-600">
+        Restaurants
+      </p>
+    </div>
+
+    <div className="bg-orange-50 p-10 rounded-3xl shadow-xl text-center">
+      <h2 className="text-5xl font-bold text-orange-500">
+        30 Min
+      </h2>
+      <p className="mt-3 text-gray-600">
+        Average Delivery
+      </p>
+    </div>
+
+  </div>
+</section>
+
       <Categories />
+
       <PopularDishes />
 
-      
+      <Rewards />
+
+      {/* Footer */}
+      <footer className="bg-black text-white py-12 text-center">
+        <h1 className="text-3xl font-bold">
+          Foodie 🍔
+        </h1>
+
+        <p className="mt-3 text-gray-400">
+          Delicious food delivered fast to your doorstep.
+        </p>
+
+        <p className="mt-4 text-gray-500 text-sm">
+          © 2026 Foodie. All Rights Reserved.
+        </p>
+      </footer>
     </>
   );
 }
