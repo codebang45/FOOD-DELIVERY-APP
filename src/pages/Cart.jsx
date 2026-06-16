@@ -15,9 +15,7 @@ console.log(cartItems);
 
 const totalPrice = cartItems.reduce(
   (total, item) =>
-    total +
-    parseInt(item.price.replace("₹", "")) *
-      item.quantity,
+    total + item.price * item.quantity,
   0
 );
 
@@ -73,9 +71,11 @@ const totalPrice = cartItems.reduce(
               </div>
 
 
-              <div className="text-4xl">
-                {item.emoji}
-              </div>
+              <img
+  src={item.image}
+  alt={item.name}
+  className="w-20 h-20 object-contain"
+/>
 
 
 

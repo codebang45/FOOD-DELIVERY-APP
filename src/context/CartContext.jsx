@@ -60,6 +60,10 @@ const clearCart = () => {
   setCartItems([]);
 };
 
+const reorderItems = (items) => {
+  setCartItems(items);
+};
+
 useEffect(() => {
   localStorage.setItem(
     "cartItems",
@@ -77,6 +81,7 @@ value={{
   increaseQuantity,
   decreaseQuantity,
   clearCart,
+  reorderItems,
 }}
 >
       {children}

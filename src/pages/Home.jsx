@@ -9,9 +9,12 @@ import dineout from "../components/assets/cards/dineout.jpg";
 import healthhub from "../components/assets/cards/healthhub.jpg";
 import genie from "../components/assets/cards/genie.jpg";
 
-import Rewards from "../components/Rewards";
+import { useState } from "react";
+
+
 
 function Home() {
+  const [searchTerm, setSearchTerm] = useState("");
   return (
     <>
       <Navbar />
@@ -53,6 +56,8 @@ function Home() {
   <input
     type="text"
     placeholder="Search for restaurant, item or more"
+    value={searchTerm}
+onChange={(e) => setSearchTerm(e.target.value)}
     className="
       w-[520px]
       h-[62px]
@@ -179,14 +184,14 @@ function Home() {
 
       <Categories />
 
-      <PopularDishes />
+      <PopularDishes searchTerm={searchTerm} />
 
-      <Rewards />
+      
 
       {/* Footer */}
       <footer className="bg-black text-white py-12 text-center">
         <h1 className="text-3xl font-bold">
-          Foodie 🍔
+          Foodie 
         </h1>
 
         <p className="mt-3 text-gray-400">

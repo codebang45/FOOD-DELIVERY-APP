@@ -1,8 +1,10 @@
 import Navbar from "../components/Navbar";
 import { useContext, useState } from "react";
 import { CartContext } from "../context/CartContext";
+import { useNavigate } from "react-router-dom";
 
 function Menu() {
+  const navigate = useNavigate();
   const { addToCart } = useContext(CartContext);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
@@ -109,13 +111,16 @@ const filteredItems = menuItems.filter((item) => {
 
         <div className="grid md:grid-cols-4 gap-8">
           {filteredItems.map((item) => (
-            <div
-              key={item.name}
-              className="bg-white p-8 rounded-2xl shadow-lg text-center hover:scale-105 transition"
-            >
-              <div className="text-7xl mb-4">
-                {item.emoji}
-              </div>
+           <div
+  key={item.name}
+  onClick={() => navigate(`/food/${item.id}`)}
+  className="bg-white p-8 rounded-2xl shadow-lg text-center hover:scale-105 transition cursor-pointer"
+>
+              <img
+  src={item.image}
+  alt={item.name}
+  className="w-40 h-40 object-contain mx-auto mb-4"
+/>
 
               <h2 className="text-2xl font-semibold">
                 {item.name}
@@ -126,7 +131,10 @@ const filteredItems = menuItems.filter((item) => {
             </p>
 
               <button
-                onClick={() => addToCart(item)}
+                onClick={(e) => {
+  e.stopPropagation();
+  addToCart(item);
+}}
                 className="mt-4 bg-orange-500 text-white px-6 py-3 rounded-xl hover:bg-orange-600"
               >
                 Add To Cart

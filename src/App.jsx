@@ -8,6 +8,7 @@ import Signup from "./pages/Signup";
 import Home from "./pages/Home";
 import Menu from "./pages/Menu";
 import Cart from "./pages/Cart";
+import FoodDetails from "./pages/FoodDetails";
 
 
 function App() {
@@ -22,6 +23,8 @@ function App() {
         <Route path="/success" element={<OrderSuccess />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/food/:id" element={<FoodDetails />} />
+        
         
       </Routes>
     </BrowserRouter>

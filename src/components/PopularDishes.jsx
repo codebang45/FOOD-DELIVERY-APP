@@ -5,7 +5,7 @@ import burgerImg from "../components/assets/categories/burger.jpg";
 import pizzaImg from "../components/assets/categories/pizza.jpg";
 import drinkImg from "../components/assets/categories/colddrink.jpg";
 
-function PopularDishes() {
+function PopularDishes({ searchTerm }) {
   const { addToCart } = useContext(CartContext);
 
  const dishes = [
@@ -32,6 +32,12 @@ function PopularDishes() {
   },
 ];
 
+const filteredDishes = dishes.filter((dish) =>
+  dish.name.toLowerCase().includes(
+    searchTerm.toLowerCase()
+  )
+);
+
   return (
     <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-10">
@@ -46,7 +52,7 @@ function PopularDishes() {
 
         <div className="grid md:grid-cols-3 gap-10">
 
-          {dishes.map((dish) => (
+          {filteredDishes.map((dish) => (
             <div
               key={dish.id}
               className="
