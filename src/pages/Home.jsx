@@ -17,32 +17,55 @@ function Home() {
   const [searchTerm, setSearchTerm] = useState("");
   return (
     <>
-      <Navbar />
+     <Navbar transparent={true} />
 
       {/* Hero Section */}
 <section
-  className="relative min-h-screen bg-cover bg-center"
+  className="relative bg-cover bg-center py-20 md:min-h-screen"
   style={{
     backgroundImage: `url(${heroBg})`,
   }}
 >
   <div className="absolute inset-0 bg-black/10"></div>
 
-  <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6">
+  <div className="relative z-10 flex flex-col items-center justify-center px-6 py-10 md:min-h-screen">
 
-   <h1 className="text-4xl md:text-5xl font-extrabold text-white text-center max-w-4xl leading-tight">
+   <h1 className="
+text-3xl
+md:text-5xl
+font-extrabold
+text-white
+text-center
+max-w-4xl
+leading-tight
+mt-6
+md:mt-0
+">
   Discover Great Food
   <br />
   Delivered Fast To Your Door !
   
 </h1>
 
-<div className="flex justify-center gap-4 mt-10">
+<div
+className="
+flex
+flex-col
+md:flex-row
+justify-center
+gap-4
+mt-10
+w-full
+items-center
+"
+>
   <input
     type="text"
     placeholder="Enter your delivery location"
     className="
-      w-[340px]
+     w-full
+md:w-[340px]
+max-w-[340px]
       h-[62px]
       bg-white
       rounded-2xl
@@ -59,7 +82,9 @@ function Home() {
     value={searchTerm}
 onChange={(e) => setSearchTerm(e.target.value)}
     className="
-      w-[520px]
+      w-full
+md:w-[520px]
+max-w-[520px]
       h-[62px]
       bg-white
       rounded-2xl
@@ -77,7 +102,7 @@ onChange={(e) => setSearchTerm(e.target.value)}
        <img
   src={foodDelivery}
   alt=""
-  className="h-44 mx-auto object-contain"
+  className="h-28 md:h-44 mx-auto object-contain"
 />
         <h3 className="font-bold text-xl mt-3"> 
           Food Delivery
@@ -87,7 +112,7 @@ onChange={(e) => setSearchTerm(e.target.value)}
         </p>
       </div>
 
-      <div className="bg-white rounded-3xl p-5 shadow-xl hover:scale-105 transition">
+      <div className="bg-white rounded-3xl p-4 md:p-5 shadow-xl hover:scale-105 transition">
         <img
   src={instamart}
   alt=""

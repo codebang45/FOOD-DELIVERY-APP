@@ -10,6 +10,9 @@ import Menu from "./pages/Menu";
 import Cart from "./pages/Cart";
 import FoodDetails from "./pages/FoodDetails";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 function App() {
   return (
@@ -27,6 +30,17 @@ function App() {
         
         
       </Routes>
+
+    <ToastContainer
+    position="top-right"
+    autoClose={2000}
+    hideProgressBar={false}
+    newestOnTop
+    closeOnClick
+    pauseOnHover
+    theme="colored"
+  />
+  
     </BrowserRouter>
   );
 }
