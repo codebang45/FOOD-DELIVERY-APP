@@ -1,130 +1,367 @@
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import { FaRedo, FaBoxOpen } from "react-icons/fa";
 
 function Orders() {
-const { reorderItems } = useContext(CartContext);
-const navigate = useNavigate();
+  const { reorderItems } = useContext(CartContext);
+  const navigate = useNavigate();
 
-const orders = JSON.parse(localStorage.getItem("orders")) || [];
+  const orders =
+    JSON.parse(localStorage.getItem("orders")) || [];
 
   return (
-    <div className="max-w-4xl mx-auto p-10">
-      <h1 className="text-4xl font-bold mb-8">
-         Order History
-      </h1>
+    <>
+      <Navbar />
 
-      {orders.length === 0 ? (
-  <p className="text-gray-500">
+      <section className="pt-28 pb-16 bg-gray-50 min-h-screen">
 
-    No Orders Yet
-  </p>
-) : (
+        <div className="max-w-6xl mx-auto px-4">
 
-      <div className="space-y-4">
-        {orders.map((order) => (
-     <div
-  key={order.id}
-  className="
-  bg-white
-  rounded-3xl
-  shadow-lg
-  p-6
-  border
-  border-gray-100
-  hover:shadow-xl
-  transition
-  "
->
-  <div className="flex justify-between items-start">
+          {/* Heading */}
 
-    <div>
-      <h2 className="text-2xl font-bold">
-        Order #{order.id}
-      </h2>
+          <div className="mb-10">
 
-      <p className="text-gray-500 mt-1">
-        {order.date}
-      </p>
-    </div>
+            <h1 className="text-4xl md:text-5xl font-bold">
+              Your Orders
+            </h1>
 
-<span
-  className="
-  bg-green-100
-  text-green-700
-  px-4
-  py-2
-  rounded-full
-  text-sm
-  font-semibold
-  "
->
-  {order.status}
-</span>
+            <p className="text-gray-500 mt-2">
+              {orders.length} Order
+              {orders.length !== 1 && "s"} | Review your previous orders
+            </p>
 
-  </div>
+          </div>
 
-  <div className="mt-5 grid md:grid-cols-2 gap-4">
+          {/* Empty */}
 
-    <div>
-      <p>
-        <span className="font-semibold">Items:</span>{" "}
-        {order.items}
-      </p>
+          {orders.length === 0 ? (
 
-      <p>
-        <span className="font-semibold">Phone:</span>{" "}
-        {order.phone}
-      </p>
-    </div>
+            <div className="bg-white rounded-3xl shadow-xl py-20 text-center">
 
-    <div>
-      <p>
-        <span className="font-semibold">Address:</span>{" "}
-        {order.address}
-      </p>
-    </div>
+              <FaBoxOpen
+                className="mx-auto text-6xl text-orange-500 mb-6"
+              />
 
-  </div>
+              <h2 className="text-3xl font-bold">
+                No Orders Yet
+              </h2>
 
-  <div className="mt-5 pt-4 border-t flex justify-between items-center">
+              <p className="text-gray-500 mt-3">
+                Looks like you haven't placed any order.
+              </p>
 
-   <div>
-  <p className="text-gray-500 text-sm">
-    Total Amount
-  </p>
+              <Link to="/menu">
 
-  <h3 className="text-2xl font-bold text-orange-500">
-    ₹{order.total}
-  </h3>
-</div>
+                <button
+                  className="
+                  mt-8
+                  bg-orange-500
+                  text-white
+                  px-8
+                  py-3
+                  rounded-xl
+                  hover:bg-orange-600
+                  transition
+                  "
+                >
+                  Browse Menu
+                </button>
 
-<button
-  onClick={() => {
-    reorderItems(order.orderedItems);
-    navigate("/cart");
-  }}
-  className="
-  bg-orange-500
-  text-white
-  px-5
-  py-2
-  rounded-xl
-  hover:bg-orange-600
-  "
->
-  Reorder
-</button>
+              </Link>
 
-  </div>
-</div>
-          
-        ))}
-    
-      </div>
-      )}
-    </div>
-    
+            </div>
+
+          ) : (
+
+            <div className="space-y-8">
+
+              {orders
+                .slice()
+                .reverse()
+                .map((order) => (
+
+                  <div
+                    key={order.id}
+                    className="
+                    bg-white
+                    rounded-3xl
+                    shadow-lg
+                    hover:shadow-xl
+                    transition
+                    overflow-hidden
+                    "
+                  >
+
+                    {/* Top */}
+
+                    <div
+                      className="
+                      bg-orange-500
+                      text-white
+                      px-6
+                      py-5
+                      flex
+                      justify-between
+                      items-center
+                      "
+                    >
+
+                      <div>
+
+                        <h2 className="text-2xl font-bold">
+                          Order #{order.id}
+                        </h2>
+
+                        <p className="text-orange-100 mt-1">
+                          {order.date}
+                        </p>
+
+                      </div>
+
+                      <span
+                        className="
+                        bg-white
+                        text-orange-500
+                        px-4
+                        py-2
+                        rounded-full
+                        font-semibold
+                        "
+                      >
+                        {order.status}
+                      </span>
+
+                    </div>
+
+                    {/* Body */}
+
+                    <div className="p-6">
+
+                      <div className="grid lg:grid-cols-2 gap-8">
+
+                        {/* Left */}
+
+                        <div>
+
+                          <h3 className="font-bold text-xl mb-5">
+                            Ordered Items
+                          </h3>
+
+                          <div className="space-y-4">
+
+                            {order.orderedItems.map((item) => (
+
+                              <div
+                                key={item.id}
+                                className="
+                                flex
+                                items-center
+                                gap-4
+                                border
+                                rounded-2xl
+                                p-3
+                                "
+                              >
+
+                                <img
+                                  src={item.image}
+                                  alt={item.name}
+                                  className="
+                                  w-20
+                                  h-20
+                                  object-contain
+                                  "
+                                />
+
+                                <div className="flex-1">
+
+                                  <h4 className="font-semibold text-lg">
+                                    {item.name}
+                                  </h4>
+
+                                  <p className="text-gray-500">
+                                    Qty : {item.quantity}
+                                  </p>
+
+                                </div>
+
+                                <h4 className="font-bold text-orange-500">
+                                  ₹
+                                  {item.price *
+                                    item.quantity}
+                                </h4>
+
+                              </div>
+
+                            ))}
+
+                          </div>
+
+                        </div>
+
+                        {/* Right */}
+
+                        <div>
+
+                          <h3 className="font-bold text-xl mb-5">
+                            Order Details
+                          </h3>
+
+                          <div className="space-y-4">
+
+                            <div className="flex justify-between">
+
+                              <span className="text-gray-500">
+                                Total Items
+                              </span>
+
+                              <span className="font-semibold">
+                                {order.items}
+                              </span>
+
+                            </div>
+
+                            <div className="flex justify-between">
+
+                              <span className="text-gray-500">
+                                Phone
+                              </span>
+
+                              <span className="font-semibold">
+                                {order.phone}
+                              </span>
+
+                            </div>
+
+                            <div className="flex justify-between">
+
+                              <span className="text-gray-500">
+                                Payment
+                              </span>
+
+                              <span className="font-semibold">
+                                {order.payment}
+                              </span>
+
+                            </div>
+
+                            <div className="flex justify-between">
+
+                              <span className="text-gray-500">
+                                Status
+                              </span>
+
+                              <span className="text-green-600 font-semibold">
+                                {order.status}
+                              </span>
+
+                            </div>
+
+                            <div>
+
+                              <p className="text-gray-500 mb-2">
+                                Delivery Address
+                              </p>
+
+                              <div className="bg-gray-100 rounded-xl p-4">
+                                {order.address}
+                              </div>
+
+                            </div>
+
+                                                        <hr className="my-6" />
+
+                            <div className="flex justify-between items-center">
+
+                              <div>
+
+                                <p className="text-gray-500 text-sm">
+                                  Total Amount
+                                </p>
+
+                                <h2 className="text-3xl font-bold text-orange-500">
+                                  ₹{order.total}
+                                </h2>
+
+                              </div>
+
+                              <button
+                                onClick={() => {
+                                  reorderItems(order.orderedItems);
+                                  navigate("/cart");
+                                }}
+                                className="
+                                bg-orange-500
+                                text-white
+                                px-6
+                                py-3
+                                rounded-xl
+                                hover:bg-orange-600
+                                transition
+                                flex
+                                items-center
+                                gap-3
+                                "
+                              >
+                                <FaRedo />
+                                Order Again
+                              </button>
+
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                ))}
+
+            </div>
+
+          )}
+
+          {/* Bottom Button */}
+
+          {orders.length > 0 && (
+
+            <div className="flex justify-center mt-12">
+
+              <Link to="/menu">
+
+                <button
+                  className="
+                  border-2
+                  border-orange-500
+                  text-orange-500
+                  px-10
+                  py-4
+                  rounded-2xl
+                  hover:bg-orange-50
+                  transition
+                  font-semibold
+                  "
+                >
+                  Continue Shopping
+                </button>
+
+              </Link>
+
+            </div>
+
+          )}
+
+        </div>
+
+      </section>
+
+    </>
   );
 }
 
