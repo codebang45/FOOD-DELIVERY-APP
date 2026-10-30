@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import foodImage from "../components/assets/images/food.jpg";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
@@ -13,13 +13,29 @@ import {
 function Login() {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
-    const handleLogin = (e) => {
-    e.preventDefault();
 
-    login("Jatin");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-    navigate("/");
-  };
+ const handleLogin = async (e) => {
+  e.preventDefault();
+
+  setLoading(true);
+
+  const { error } = await login(email, password);
+
+  setLoading(false);
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  alert("Login Successful!");
+
+  navigate("/");
+};
   return (
     <div className="min-h-screen flex bg-gradient-to-br from-orange-500 via-orange-400 to-yellow-300">
 
@@ -116,18 +132,20 @@ function Login() {
                 text-orange-500"
               />
 
-              <input
-                type="email"
-                placeholder="Email"
-                className="
-                w-full
-                pl-12
-                p-4
-                rounded-xl
-                border
-                outline-none
-                focus:border-orange-500"
-              />
+             <input
+  type="email"
+  placeholder="Email"
+  value={email}
+  onChange={(e) => setEmail(e.target.value)}
+  className="
+    w-full
+    pl-12
+    p-4
+    rounded-xl
+    border
+    outline-none
+    focus:border-orange-500"
+/>
             </div>
 
             <div className="relative">
@@ -140,18 +158,20 @@ function Login() {
                 text-orange-500"
               />
 
-              <input
-                type="password"
-                placeholder="Password"
-                className="
-                w-full
-                pl-12
-                p-4
-                rounded-xl
-                border
-                outline-none
-                focus:border-orange-500"
-              />
+             <input
+  type="password"
+  placeholder="Password"
+  value={password}
+  onChange={(e) => setPassword(e.target.value)}
+  className="
+    w-full
+    pl-12
+    p-4
+    rounded-xl
+    border
+    outline-none
+    focus:border-orange-500"
+/>
             </div>
 
             <div className="text-right">
@@ -168,22 +188,25 @@ function Login() {
             </div>
 
             <button
-              className="
-              w-full
-              bg-orange-500
-              text-white
-              py-4
-              rounded-xl
-              font-semibold
-              shadow-lg
-              hover:scale-105
-              hover:bg-orange-600
-              transition-all
-              duration-300
-            "
-            >
-              Login
-            </button>
+  type="submit"
+  disabled={loading}
+  className="
+    w-full
+    bg-orange-500
+    text-white
+    py-4
+    rounded-xl
+    font-semibold
+    shadow-lg
+    hover:scale-105
+    hover:bg-orange-600
+    transition-all
+    duration-300
+    disabled:opacity-50
+  "
+>
+  {loading ? "Logging in..." : "Login"}
+</button>
 
             <div className="my-4 text-center text-gray-500">
               OR

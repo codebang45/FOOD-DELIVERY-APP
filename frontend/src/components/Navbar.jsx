@@ -12,14 +12,38 @@ import { AuthContext } from "../context/AuthContext";
 function Navbar({ transparent = false }) {
   const { cartItems } = useContext(CartContext);
   const { user, logout } = useContext(AuthContext);
-
+  const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  useEffect(() => {
+  const isScrolled = transparent && scrolled;
+  
+
+
+
+useEffect(() => {
+  const handleScroll = () => {
+    setScrolled(window.scrollY > 50);
+  };
+
+  window.addEventListener("scroll", handleScroll);
+
+  return () => {
+    window.removeEventListener("scroll", handleScroll);
+  };
+}, []);
+
+useEffect(() => {
   document.body.style.overflow = menuOpen ? "hidden" : "auto";
+
+  const handleScroll = () => {
+    setScrolled(window.scrollY > 50);
+  };
+
+  window.addEventListener("scroll", handleScroll);
 
   return () => {
     document.body.style.overflow = "auto";
+    window.removeEventListener("scroll", handleScroll);
   };
 }, [menuOpen]);
 
@@ -31,29 +55,33 @@ function Navbar({ transparent = false }) {
   return (
 <nav
   className={`
-  fixed
-  top-0
-  left-0
-  w-full
-  z-[999]
-  px-6
-  py-5
-  flex
-  justify-between
-  items-center
-  transition-all
-  duration-300
-  ${
-    transparent
+    fixed
+    top-0
+    left-0
+    w-full
+    z-[999]
+    px-6
+    py-5
+    flex
+    justify-between
+    items-center
+    transition-all
+    duration-300
+ ${
+  isScrolled
+    ? "bg-white text-black shadow-md"
+    : transparent
       ? "bg-transparent text-white"
       : "bg-white text-black shadow-md"
-  }
+}
   `}
 >
       {/* Logo */}
 <h1
   className={`text-3xl md:text-5xl font-bold ${
-    transparent ? "text-white" : "text-orange-500"
+    scrolled || !transparent
+      ? "text-orange-500"
+      : "text-white"
   }`}
 >
   Foodie
@@ -73,41 +101,49 @@ function Navbar({ transparent = false }) {
           <Link to="/orders">Orders</Link>
         </li>
 
-        <li>About</li>
+        <li>
+          <Link to="/about">About</Link>
+        </li>
 
-        <li>Contact</li>
+        <li>
+  <Link to="/contact">Contact</Link>
+</li>
       </ul>
 
       {/* Desktop Right */}
       <div className="hidden md:flex items-center gap-8">
         <Link to="/cart" className="relative">
-          <FaShoppingCart
-            size={24}
-            className="hover:text-orange-500"
-          />
+<FaShoppingCart
+  size={24}
+  className={`${
+    scrolled || !transparent
+      ? "text-black"
+      : "text-white"
+  } hover:text-orange-500`}
+/>
 
-          <span
-            className="
-            absolute
-            -top-2
-            -right-3
-            bg-orange-500
-            text-white
-            text-xs
-            px-2
-            py-1
-            rounded-full
-            "
-          >
-            {totalItems}
-          </span>
+<span
+  className="
+    absolute
+    -top-2
+    -right-3
+    bg-orange-500
+    text-white
+    text-xs
+    px-2
+    py-1
+    rounded-full
+  "
+>
+  {totalItems}
+</span>
         </Link>
 
         {user ? (
           <div className="flex items-center gap-3">
-            <span>
-              Hi {user.name}
-            </span>
+  <span className="font-medium">
+  Hi {user.email.split("@")[0]}
+</span>
 
             <button
               onClick={logout}
@@ -119,18 +155,20 @@ function Navbar({ transparent = false }) {
         ) : (
           <Link to="/login">
 <button
-  className={`
-    px-6
-    py-3
-    rounded-xl
-    text-white
-    transition
-    ${
-      transparent
-        ? "bg-black hover:bg-gray-800"
-        : "bg-orange-500 hover:bg-orange-600"
-    }
-  `}
+className={`
+  px-6
+  py-3
+  rounded-xl
+  text-white
+  transition
+  ${
+  isScrolled
+    ? "bg-orange-500 hover:bg-orange-600"
+    : transparent
+      ? "bg-black hover:bg-gray-800"
+      : "bg-orange-500 hover:bg-orange-600"
+}
+`}
 >
   Login
 </button>
@@ -207,7 +245,9 @@ function Navbar({ transparent = false }) {
 
           {user ? (
             <>
-              <span>Hi {user.name}</span>
+<span>
+  Hi {user.email.split("@")[0]}
+</span>
 
               <button
                 onClick={() => {

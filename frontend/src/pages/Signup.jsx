@@ -1,5 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import foodImage from "../components/assets/images/food.jpg";
+
+import { useContext, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 import {
   FaUser,
@@ -8,7 +11,43 @@ import {
   FaGoogle,
 } from "react-icons/fa";
 
+
 function Signup() {
+const navigate = useNavigate();
+const { signup } = useContext(AuthContext);
+
+const [name, setName] = useState("");
+const [email, setEmail] = useState("");
+const [password, setPassword] = useState("");
+const [confirmPassword, setConfirmPassword] = useState("");
+const [loading, setLoading] = useState(false);
+
+const handleSignup = async (e) => {
+  e.preventDefault();
+
+  console.log("Signup button clicked");
+
+  if (password !== confirmPassword) {
+    alert("Passwords do not match");
+    return;
+  }
+
+  setLoading(true);
+
+  const { error } = await signup(name, email, password);
+
+  setLoading(false);
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  alert("Account created successfully!");
+
+  navigate("/login");
+};
+
   return (
     <div className="min-h-screen flex bg-gradient-to-br from-orange-500 via-orange-400 to-yellow-300">
       
@@ -76,7 +115,10 @@ w-[450px]
             Create Account
           </h1>
 
-          <form className="space-y-4">
+          <form
+  onSubmit={handleSignup}
+  className="space-y-4"
+>
 
             <div className="relative">
   <FaUser
@@ -88,10 +130,12 @@ w-[450px]
     text-orange-500"
   />
 
-  <input
-    type="text"
-    placeholder="Full Name"
-    className="
+<input
+  type="text"
+  placeholder="Full Name"
+  value={name}
+  onChange={(e) => setName(e.target.value)}
+  className="
     w-full
     pl-12
     p-4
@@ -99,10 +143,10 @@ w-[450px]
     border
     outline-none
     focus:border-orange-500"
-  />
+/>
 </div>
 
-            <div className="relative">
+  <div className="relative">
   <FaEnvelope
     className="
     absolute
@@ -112,10 +156,12 @@ w-[450px]
     text-orange-500"
   />
 
-  <input
-    type="email"
-    placeholder="Email"
-    className="
+ <input
+  type="email"
+  placeholder="Email"
+  value={email}
+  onChange={(e) => setEmail(e.target.value)}
+  className="
     w-full
     pl-12
     p-4
@@ -123,10 +169,10 @@ w-[450px]
     border
     outline-none
     focus:border-orange-500"
-  />
+/>
 </div>
 
-            <div className="relative">
+  <div className="relative">
   <FaLock
     className="
     absolute
@@ -136,10 +182,12 @@ w-[450px]
     text-orange-500"
   />
 
-  <input
-    type="password"
-    placeholder="Password"
-    className="
+<input
+  type="password"
+  placeholder="Password"
+  value={password}
+  onChange={(e) => setPassword(e.target.value)}
+  className="
     w-full
     pl-12
     p-4
@@ -147,10 +195,10 @@ w-[450px]
     border
     outline-none
     focus:border-orange-500"
-  />
+/>
 </div>
 
-            <div className="relative">
+  <div className="relative">
   <FaLock
     className="
     absolute
@@ -160,10 +208,12 @@ w-[450px]
     text-orange-500"
   />
 
-  <input
-    type="password"
-    placeholder="Confirm Password"
-    className="
+ <input
+  type="password"
+  placeholder="Confirm Password"
+  value={confirmPassword}
+  onChange={(e) => setConfirmPassword(e.target.value)}
+  className="
     w-full
     pl-12
     p-4
@@ -171,26 +221,29 @@ w-[450px]
     border
     outline-none
     focus:border-orange-500"
-  />
+/>
 </div>
 
-            <button
-className="
-w-full
-bg-orange-500
-text-white
-py-4
-rounded-xl
-font-semibold
-shadow-lg
-hover:scale-105
-hover:bg-orange-600
-transition-all
-duration-300
-"
-            >
-              Create Account
-            </button>
+<button
+  type="submit"
+  disabled={loading}
+  className="
+    w-full
+    bg-orange-500
+    text-white
+    py-4
+    rounded-xl
+    font-semibold
+    shadow-lg
+    hover:scale-105
+    hover:bg-orange-600
+    transition-all
+    duration-300
+    disabled:opacity-50
+  "
+>
+  {loading ? "Creating Account..." : "Create Account"}
+</button>
 
             <div className="my-4 text-center text-gray-500">
   OR
